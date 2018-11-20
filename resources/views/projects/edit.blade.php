@@ -10,11 +10,11 @@
     @method('PATCH')
 
     <div>
-      <input type="text" name="title" placeholder="Project title" value="{{ $project->title }}">
+      <input type="text" name="title" placeholder="Project title" value="{{ $project->title }}" style="{{ $errors->has('title') ? 'border-color: red' : ''}}" required>
     </div>
 
     <div>
-      <textarea name="description" id="description" placeholder="Project description">
+      <textarea name="description" id="description" placeholder="Project description" style="{{ $errors->has('description') ? 'border-color: red' : ''}}" required>
         {{ $project->description }}
       </textarea>
     </div>
@@ -32,5 +32,15 @@
       <button type="submit" style="background-color: red">Delete</button>
     </div>
   </form>
+  
+  @if ($errors->any())
+    <div>
+      <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 
 @endsection
