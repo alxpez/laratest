@@ -38,12 +38,13 @@ class ProjectsController extends Controller {
     public function store(Request $request)
     {
         // https://laravel.com/docs/5.7/validation#available-validation-rules
-        $validatedAttributes = request()->validate([
-            'title' => ['required', 'min:3', 'max:100'],
-            'description' => ['required', 'min:3'],
-        ]);
 
-        Project::create($validatedAttributes);
+        Project::create(
+            request()->validate([
+                'title' => ['required', 'min:3', 'max:100'],
+                'description' => ['required', 'min:3'],
+            ])
+        );
 
         return redirect('/projects');
     }
@@ -80,12 +81,13 @@ class ProjectsController extends Controller {
     public function update(Request $request, Project $project)
     {
         // https://laravel.com/docs/5.7/validation#available-validation-rules
-        $validatedAttributes = request()->validate([
-            'title' => ['required', 'min:3', 'max:100'],
-            'description' => ['required', 'min:3'],
-        ]);
 
-        $project->update($validatedAttributes);
+        $project->update(
+            request()->validate([
+                'title' => ['required', 'min:3', 'max:100'],
+                'description' => ['required', 'min:3'],
+            ])
+        );
 
         return redirect('/projects');
     }
