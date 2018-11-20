@@ -24,7 +24,7 @@ class ProjectsController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() 
     {
         return view('projects.create');
     }
@@ -34,15 +34,26 @@ class ProjectsController extends Controller {
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function store(Request $request)
     {
-        $project = new Project();
+        // $project = new Project();
 
-        $project->title = request('title');
-        $project->description = request('description');
+        // $project->title = request('title');
+        // $project->description = request('description');
 
-        $project->save();
+        // $project->save();
+
+        // ^^^ same as below
+
+        // Project::create([
+        //     'title' => request('title'),
+        //     'description' => request('description')
+        // ]);
+
+        // ^^^ same as below
+
+        Project::create(request(['title', 'description']));
 
         return redirect('/projects');
     }
@@ -50,41 +61,35 @@ class ProjectsController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        //
+        return view('projects.show', compact('project'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-        $project = Project::findOrFail($id);
         return view('projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request 
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        $project = Project::findOrFail($id);
-
-        $project->title = request('title');
-        $project->description = request('description');
-
-        $project->save();
+        $project->update(request(['title', 'description']));
 
         return redirect('/projects');
     }
@@ -92,12 +97,12 @@ class ProjectsController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        Project::findOrFail($id)->delete();
+        $project->delete();
 
         return redirect('/projects');
     }

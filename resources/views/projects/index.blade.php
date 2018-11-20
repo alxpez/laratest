@@ -12,8 +12,12 @@
     <br>
     <br>
 
-    @foreach ($projects as $project)
-        <li><a href="/projects/{{$project->id}}/edit">{{ $project->title }} - {{ $project->description }}</a></li>
-    @endforeach
+    <ul>
+        @foreach ($projects as $project)
+            <li>
+                <a href="/projects/{{$project->id}}">{{ $project->title }}</a>
+            </li>
+        @endforeach
+    </ul>
 
 @endsection
