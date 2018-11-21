@@ -35,7 +35,7 @@ class ProjectsController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */ 
-    public function store(Request $request)
+    public function store()
     {
         // https://laravel.com/docs/5.7/validation#available-validation-rules
 
@@ -78,7 +78,7 @@ class ProjectsController extends Controller {
      * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Project $project)
     {
         // https://laravel.com/docs/5.7/validation#available-validation-rules
 
