@@ -8,12 +8,21 @@
 
     <a href="/projects/{{$project->id}}/edit">Edit</a>
     
-    @if ($project->tasks->count())
-        <h3>Tasks</h3>
-        
+    {{-- Display if project has at least 1 task --}}
+    @if ($project->tasks->count()) 
         <ul>
             @foreach ($project->tasks as $task)
-                <li>{{ $task->description }}</li>
+                <li>
+                    <form method="POST" action="/tasks/{{$task->id}}">
+                        @csrf
+                        @method('PATCH')
+
+                        <label for="completed" style="{{$task->completed ? 'text-decoration: line-through' : ''}}">
+                            <input type="checkbox" name="completed" onchange="this.form.submit()" {{$task->completed ? 'checked' : ''}}>
+                            {{ $task->description }}
+                        </label>
+                    </form>
+                </li>
             @endforeach
         </ul>
     @endif
