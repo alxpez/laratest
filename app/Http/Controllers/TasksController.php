@@ -11,7 +11,6 @@ class TasksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Project $project)
@@ -28,16 +27,16 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
     public function update(Task $task)
     {
-        // Update the completed value based on its existence
-        $task->update([
-            'completed' => request()->has('completed'),
-        ]);
+        // Improving encapsulation
+
+        request()->has('completed')
+            ? $task->complete()
+            : $task->incomplete();
 
         return back();
     }
