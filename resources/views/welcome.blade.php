@@ -1,12 +1,16 @@
 
-@extends('layout')
+@extends('layouts.welcome')
 
 
 @section('content')
 
-    <h1>Index</h1>
+    <div class="title m-b-md">
+        Laratest
+    </div>
 
-    <li><a href="/projects">My projects</a></li>
-    <li><a href="/projects/create">New project</a></li>
+    <div class="links">
+        <a href="/projects">Projects</a>
+        <a href="/projects/create">New Project</a>
+    </div>
 
 @endsection

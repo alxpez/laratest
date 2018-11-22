@@ -1,43 +1,64 @@
-@extends('layout')
+@extends('layouts.app')
 
 
 @section('content')
-    <h1>{{ $project->title }}</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1>{{ $project->title }}</h1>
+            <div class="card">
+                <div class="card-header">
+                    <a href="/projects/{{ $project->id }}/edit">Edit</a>
+                </div>
 
-    <p>{{ $project->description }}</p>
+                <div class="card-body">
+                    <p>{{ $project->description }}</p>
+                </div>
+            </div>
 
-    <a href="/projects/{{ $project->id }}/edit">Edit</a>
+            @if ($project->tasks->count())
+                <div class="card">
+                    <div class="card-header">Tasks</div>
     
-    {{-- Display if project has at least 1 task --}}
-    @if ($project->tasks->count())
-        <div style="border: 1px solid #eee">
-            <ul>
-                @foreach ($project->tasks as $task)
-                    <li>
-                        <form method="POST" action="/tasks/{{ $task->id }}">
+                    <div class="card-body">
+                        
+                        <div>
+                            <ul>
+                                @foreach ($project->tasks as $task)
+                                    <li>
+                                        <form method="POST" action="/tasks/{{ $task->id }}">
+                                            @csrf
+                                            @method('PATCH')
+                    
+                                            <label for="completed" style="{{ $task->completed ? 'text-decoration: line-through' : '' }}">
+                                                <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
+                                                {{ $task->description }}
+                                            </label>
+                                        </form>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <form action="/projects/{{ $project->id }}/tasks" method="POST">
                             @csrf
-                            @method('PATCH')
-    
-                            <label for="completed" style="{{ $task->completed ? 'text-decoration: line-through' : '' }}">
-                                <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
-                                {{ $task->description }}
-                            </label>
+                
+                            <input type="text" name="description" placeholder="Task description">
+                            <button type="submit">Add task</button>
                         </form>
-                    </li>
-                @endforeach
-            </ul>
+                    </div>
+                </div>
+            </div>
+            
+            @include('errors')
         </div>
-    @endif
-
-
-    <div style="border: 1px solid #eee">
-        <form action="/projects/{{ $project->id }}/tasks" method="POST">
-            @csrf
-
-            <input type="text" name="description" placeholder="Task description">
-            <button type="submit">Add task</button>
-        </form>
     </div>
-
-    @include('errors')
+</div>
 @endsection
