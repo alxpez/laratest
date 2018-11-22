@@ -9,6 +9,16 @@
             <div class="card">
                 <div class="card-header">
                     <a href="/projects/{{ $project->id }}/edit">Edit</a>
+                    <div style="display: inline-block">
+                        <form method="POST" action="/projects/{{ $project->id }}">
+                            @csrf
+                            @method('DELETE')
+                        
+                            <div>
+                                <button type="submit" style="color: white; background-color: red">Delete</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="card-body">
